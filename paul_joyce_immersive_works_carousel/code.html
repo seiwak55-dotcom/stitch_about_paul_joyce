@@ -430,6 +430,7 @@
     </div>
 
     <script>
+<<<<<<< HEAD
         // ===== DATA: Track list =====
         const tracks = [
             { title: "Six Choruses (V. The Angel)", meta: "Showreel • 2024", trackName: "Six Choruses (V. The Angel)", albumName: "Paul Joyce • Showreel", img: "../img/music1.png", duration: "3:42", video: "music1.mov", audio: "music1.mp3" },
@@ -439,6 +440,122 @@
             { title: "Each Other", meta: "Showreel • 2024", trackName: "Each Other", albumName: "Paul Joyce • Showreel", img: "../img/music5.jpeg", duration: "6:12", video: "music5.mov", audio: "music5.mp3" },
             { title: "A la mani", meta: "Showreel • 2024", trackName: "A la mani", albumName: "Paul Joyce • Showreel", img: "../img/music6.jpeg", duration: "7:24", video: "music6.mov", audio: "music6.mp3" },
             { title: "Tenki Tími", meta: "Showreel • 2024", trackName: "Tenki Tími", albumName: "Paul Joyce • Showreel", img: "../img/music7.jpeg", duration: "4:30", video: "music7.mov", audio: "music7.mp3" },
+=======
+        // ===== Album Data =====
+        const albums = [
+            {
+                img: "music1.png",
+                title: "Six Choruses (V. The Angel)", track: "Six Choruses (V. The Angel)", tags: ["Orchestrator", "Producer"],
+                desc: "A cinematic journey blending neo-classical textures with electronic synthesis.",
+                overview: "Six Choruses (V. The Angel) is a choral and orchestral work that explores the interplay between human voice and orchestral texture, creating a soundscape of ethereal beauty.",
+                contributions: [
+                    { num: "01", title: "Orchestration", desc: "Full orchestral arrangement supporting the choral writing." },
+                    { num: "02", title: "Production", desc: "Studio production and session direction." },
+                ],
+                listenFor: [
+                    { time: "30", label: "Opening Choral Entry" },
+                    { time: "90", label: "Orchestral Swell" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Spitfire Audio BBCSO" },
+                duration: "3:42", audio: "music1.mp3", latest: true,
+            },
+            {
+                img: "music2.jpeg",
+                title: "Live...", track: "Live...", tags: ["Composer", "Producer"],
+                desc: "A live recording capturing raw energy and emotional depth in real time.",
+                overview: "Live... is a document of performance — an unfiltered recording that captures the spontaneity and intensity of a live session, with all the imperfections that make it human.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original compositions performed live." },
+                    { num: "02", title: "Production", desc: "Live recording production and post-mix." },
+                ],
+                listenFor: [
+                    { time: "20", label: "Live Room Ambience" },
+                    { time: "85", label: "Emotional Climax" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Live Recording" },
+                duration: "4:15", audio: "music2.mp3", latest: false,
+            },
+            {
+                img: "music3.jpeg",
+                title: "The Beauty In Your Eyes", track: "The Beauty In Your Eyes", tags: ["Composer", "Orchestrator"],
+                desc: "A deeply personal piece exploring beauty through orchestral and electronic textures.",
+                overview: "The Beauty In Your Eyes is an intimate exploration of perception and emotion, using layered strings and subtle electronics to create a world of delicate introspection.",
+                contributions: [
+                    { num: "01", title: "Orchestration", desc: "String writing and orchestral arrangement." },
+                    { num: "02", title: "Electronic Textures", desc: "Subtle electronic layers complementing the acoustic writing." },
+                ],
+                listenFor: [
+                    { time: "45", label: "String Entry" },
+                    { time: "130", label: "Electronic Layer Emerges" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Berlin Strings, Spitfire" },
+                duration: "5:01", audio: "music3.mp3", latest: false,
+            },
+            {
+                img: "music4.jpeg",
+                title: "Laurel", track: "Laurel", tags: ["Composer", "Producer"],
+                desc: "A reflective piece evoking triumph and transience through orchestral warmth.",
+                overview: "Laurel draws on classical idioms to explore the bittersweet nature of achievement — the warmth of brass and the tenderness of strings intertwining in a meditation on memory.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original thematic writing for brass and strings." },
+                    { num: "02", title: "Production", desc: "Full production and mix." },
+                ],
+                listenFor: [
+                    { time: "15", label: "Brass Theme Introduction" },
+                    { time: "100", label: "String Counter-melody" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "VSL, Spitfire Symphonic" },
+                duration: "3:58", audio: "music4.mp3", latest: false,
+            },
+            {
+                img: "music5.jpeg",
+                title: "Each Other", track: "Each Other", tags: ["Composer", "Arranger"],
+                desc: "A collaborative work exploring connection and dialogue through interweaving musical lines.",
+                overview: "Each Other is built on a dialogue between instruments — call and response, tension and resolution, written to evoke the complexity of human relationships.",
+                contributions: [
+                    { num: "01", title: "Arrangement", desc: "Interweaving melodic lines for ensemble." },
+                    { num: "02", title: "Production", desc: "Studio production and session direction." },
+                ],
+                listenFor: [
+                    { time: "25", label: "Opening Dialogue" },
+                    { time: "110", label: "Harmonic Resolution" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Chamber Ensemble Libraries" },
+                duration: "6:12", audio: "music5.mp3", latest: false,
+            },
+            {
+                img: "music6.jpeg",
+                title: "A la mani", track: "A la mani", tags: ["Composer", "Sound Design"],
+                desc: "A fusion of traditional Catalan melody and contemporary orchestration.",
+                overview: "A la mani draws inspiration from Catalan folk tradition, reimagined through contemporary orchestral and electronic textures in a work that bridges heritage and innovation.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original work inspired by Catalan folk melodies." },
+                    { num: "02", title: "Orchestration", desc: "Full orchestral and electronic arrangement." },
+                ],
+                listenFor: [
+                    { time: "10", label: "Folk Theme Statement" },
+                    { time: "95", label: "Electronic Integration" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Custom Samples, Spitfire" },
+                duration: "7:24", audio: "music6.mp3", latest: false,
+            },
+            {
+                img: "music7.jpeg",
+                title: "Tenki Tími", track: "Tenki Tími", tags: ["Composer", "Producer"],
+                desc: "An Icelandic-inspired meditation on time, weather and transience.",
+                overview: "Tenki Tími (Weather Time) is inspired by the Icelandic relationship with nature — unpredictable, vast and humbling. The music shifts between stillness and turbulence, mirroring the landscape.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original theme and development for orchestra." },
+                    { num: "02", title: "Production", desc: "Atmospheric production with field recordings." },
+                ],
+                listenFor: [
+                    { time: "20", label: "Storm Theme Builds" },
+                    { time: "120", label: "Calm Resolution" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Spitfire, Field Recordings" },
+                duration: "4:30", audio: "music7.mp3", latest: false,
+            },
+>>>>>>> d054298 (Move jacket images into project folders to fix GitHub Pages display issue)
         ];
 
         let currentTrack = 0;
