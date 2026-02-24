@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>About | Paul Joyce - Orchestrator &amp; Producer</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#22c55e",
+                        "background-light": "#fcfcfc",
+                        "background-dark": "#0a0a0a",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: { DEFAULT: "0.5rem" },
+                },
+            },
+        };
+    </script>
+    <style>
+        .kinetic-text {
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .kinetic-container:hover .kinetic-text {
+            transform: translateY(-5px);
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-bar-fill {
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item {
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .timeline-item.revealed {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+
+    <!-- NAV -->
+    <nav id="main-nav"
+        class="fixed top-0 w-full z-50 transition-all duration-300 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 py-4 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a class="flex items-center space-x-2" href="../paul_joyce_portfolio_home/code.html">
+                <span class="font-display text-xl font-extrabold tracking-tighter">PAUL<span
+                        class="text-primary">JOYCE</span></span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <a class="hover:text-primary transition-colors" href="../paul_joyce_portfolio_home/code.html">Home</a>
+                <a class="hover:text-primary transition-colors"
+                    href="../paul_joyce_immersive_works_carousel/code.html">Work</a>
+                <a class="text-primary font-bold" href="#">About</a>
+                <a class="hover:text-primary transition-colors"
+                    href="../paul_joyce_portfolio_home/code.html#contact">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="dark-toggle"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    title="Toggle dark mode">
+                    <span class="material-symbols-outlined text-xl dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl hidden dark:block">light_mode</span>
+                </button>
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <a class="hidden md:block bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all"
+                    href="../paul_joyce_portfolio_home/code.html#contact">
+                    Hire Paul
+                </a>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden px-6 py-4 border-t border-slate-200 dark:border-slate-800 space-y-3 text-sm font-medium uppercase tracking-widest">
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_portfolio_home/code.html">Home</a>
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_immersive_works_carousel/code.html">Work</a>
+            <a class="block text-primary font-bold py-2" href="#">About</a>
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_portfolio_home/code.html#contact">Contact</a>
+            <a class="block w-full text-center bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary transition-all mt-2"
+                href="../paul_joyce_portfolio_home/code.html#contact">Hire Paul</a>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20">
+
+        <!-- Hero Banner -->
+        <section class="max-w-7xl mx-auto px-6 mb-24">
+            <div
+                class="flex flex-col md:flex-row items-end justify-between gap-8 border-b border-slate-200 dark:border-slate-800 pb-12">
+                <div class="reveal-up">
+                    <div class="flex items-center gap-3 text-primary mb-4">
+                        <span class="h-px w-8 bg-primary"></span>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em]">The Person Behind the Sound</span>
+                    </div>
+                    <h1
+                        class="text-7xl md:text-9xl font-display font-bold tracking-tighter leading-none kinetic-container">
+                        <span class="kinetic-text">AB</span><span class="kinetic-text italic text-primary">OUT.</span>
+                    </h1>
+                </div>
+                <div class="max-w-md reveal-up" style="transition-delay:0.15s">
+                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed italic">
+                        "My music combines orchestral writing, contemporary textures, and electronic elements, exploring
+                        a sonic language that seeks emotional depth and narrative expression through sound."
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bio Section -->
+        <section class="max-w-7xl mx-auto px-6 mb-32">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                <div class="lg:col-span-5 reveal-up" style="transition-delay:0.2s">
+                    <div class="relative group">
+                        <div
+                            class="absolute -inset-4 bg-primary/10 rounded-2xl scale-95 group-hover:scale-100 transition-transform duration-700">
+                        </div>
+                        <img alt="Professional portrait of Paul Joyce"
+                            class="relative w-full aspect-[4/5] object-cover rounded-xl shadow-2xl grayscale hover:grayscale-0 transition-all duration-700"
+                            src="R6BW.jpg" />
+                        <div class="absolute bottom-6 left-6 bg-white dark:bg-black px-4 py-2 rounded-lg shadow-lg">
+                            <p class="text-xs font-bold uppercase tracking-widest text-primary">Est. 2012</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-7 flex flex-col justify-center reveal-up" style="transition-delay:0.3s">
+                    <h2 class="text-4xl font-display font-bold mb-8 leading-tight">
+                        Composer, Producer <br /><span class="text-primary italic">&amp; Orchestrator</span>
+                    </h2>
+                    <div class="space-y-6 text-lg text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl">
+                        <p>
+                            Paul Joyce is a composer, producer, and orchestrator specializing in film scores,
+                            documentaries,
+                            and audiovisual projects. His music combines orchestral writing, contemporary textures, and
+                            electronic elements, exploring a sonic language that seeks emotional depth and narrative
+                            expression through sound.
+                        </p>
+                        <p>
+                            He studied at the Fundació Conservatori Superior del Liceu with renowned composers such as
+                            Montserrat Torras, Benet Casablancas, Ramón Humet, and Octavi Rumbau, and previously at the
+                            Taller de Músics. He complements his solid academic foundation with a strong autodidactic
+                            path
+                            that began at the age of 13, when he discovered his passion for film music.
+                        </p>
+                        <p>
+                            He has composed original scores for short films and documentaries, including <em>Pintura i
+                                Cadenes</em>,
+                            and has collaborated on multidisciplinary projects combining music and visual arts. His
+                            concert
+                            works have been performed at the Museu Picasso in Barcelona and the Conservatori Superior
+                            del
+                            Liceu, and he was a finalist in the II Composition Competition of the OSVCV.
+                        </p>
+                        <div class="pt-8 grid grid-cols-2 gap-8 border-t border-slate-200 dark:border-slate-800">
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Location</h4>
+                                <p class="font-medium">Barcelona / Remote</p>
+                            </div>
+                            <div>
+                                <h4 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Specialty</h4>
+                                <p class="font-medium">Film Score & Orchestration</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="bg-slate-50 dark:bg-slate-900/50 py-20 mb-0">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16 reveal-up">
+                    <span class="text-xs font-bold text-slate-400 tracking-[0.4em] uppercase">Expertise</span>
+                    <h3 class="text-3xl font-display font-bold mt-2">Core Competencies</h3>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto" id="skills-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Services & Credits -->
+        <section class="bg-slate-50 dark:bg-slate-900/50 py-20">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-24">
+                    <div class="reveal-up">
+                        <div class="flex items-center gap-4 mb-12">
+                            <span class="material-symbols-outlined text-primary">auto_awesome</span>
+                            <h3 class="text-2xl font-display font-bold uppercase tracking-widest">Services</h3>
+                        </div>
+                        <ul class="space-y-6">
+                            <li class="group flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 cursor-pointer"
+                                onclick="window.location='../paul_joyce_portfolio_home/code.html#contact'">
+                                <span class="text-xl font-medium group-hover:text-primary transition-colors">Full
+                                    Orchestral Arrangement</span>
+                                <span
+                                    class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:translate-x-1 group-hover:text-primary transition-all">arrow_forward</span>
+                            </li>
+                            <li class="group flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 cursor-pointer"
+                                onclick="window.location='../paul_joyce_portfolio_home/code.html#contact'">
+                                <span class="text-xl font-medium group-hover:text-primary transition-colors">Digital
+                                    Score Preparation</span>
+                                <span
+                                    class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:translate-x-1 group-hover:text-primary transition-all">arrow_forward</span>
+                            </li>
+                            <li class="group flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 cursor-pointer"
+                                onclick="window.location='../paul_joyce_portfolio_home/code.html#contact'">
+                                <span class="text-xl font-medium group-hover:text-primary transition-colors">Cinematic
+                                    Sound Design</span>
+                                <span
+                                    class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:translate-x-1 group-hover:text-primary transition-all">arrow_forward</span>
+                            </li>
+                            <li class="group flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 cursor-pointer"
+                                onclick="window.location='../paul_joyce_portfolio_home/code.html#contact'">
+                                <span class="text-xl font-medium group-hover:text-primary transition-colors">Remote
+                                    Session Production</span>
+                                <span
+                                    class="material-symbols-outlined text-slate-300 dark:text-slate-700 group-hover:translate-x-1 group-hover:text-primary transition-all">arrow_forward</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="reveal-up" style="transition-delay:0.15s">
+                        <div class="flex items-center gap-4 mb-12">
+                            <span class="material-symbols-outlined text-primary">history_edu</span>
+                            <h3 class="text-2xl font-display font-bold uppercase tracking-widest">Selected Credits</h3>
+                        </div>
+                        <div class="space-y-8">
+                            <div
+                                class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item">
+                                <div>
+                                    <p class="font-bold text-lg">"Six Choruses (V. The Angel)"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · 2024</p>
+                                </div>
+                                <span
+                                    class="text-xs bg-primary/10 text-primary px-3 py-1 rounded-full font-bold">LATEST</span>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.1s">
+                                <div>
+                                    <p class="font-bold text-lg">"Live..."</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Producer</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.15s">
+                                <div>
+                                    <p class="font-bold text-lg">"The Beauty In Your Eyes"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Orchestrator
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.2s">
+                                <div>
+                                    <p class="font-bold text-lg">"Laurel"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Producer</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.25s">
+                                <div>
+                                    <p class="font-bold text-lg">"Each Other"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Arranger</p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.3s">
+                                <div>
+                                    <p class="font-bold text-lg">"A la mani"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Sound Design
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-start border-b border-slate-200 dark:border-slate-800 pb-4 timeline-item"
+                                style="transition-delay:0.35s">
+                                <div>
+                                    <p class="font-bold text-lg">"Tenki Tími"</p>
+                                    <p class="text-sm text-slate-500 uppercase tracking-widest">Composer · Producer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Back link -->
+        <section class="max-w-7xl mx-auto px-6 py-20 text-center reveal-up">
+            <a class="inline-flex items-center gap-4 group" href="../paul_joyce_immersive_works_carousel/code.html">
+                <span
+                    class="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">west</span>
+                <span
+                    class="text-3xl font-display font-bold border-b-2 border-slate-900 dark:border-slate-100 pb-2">Explore
+                    Immersive Works</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer CTA -->
+    <footer class="border-t border-slate-200 dark:border-slate-800 pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-slate-900 dark:bg-slate-950 rounded-3xl p-12 md:p-20 text-center text-white mb-20 reveal-up">
+                <div class="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-1.5 rounded-full mb-8">
+                    <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                    <span class="text-xs font-bold uppercase tracking-[0.2em]">Available for projects</span>
+                </div>
+                <h2 class="text-4xl md:text-6xl font-display font-bold mb-10 max-w-2xl mx-auto leading-tight">
+                    Let's create your next <br />big idea.
+                </h2>
+                <a class="inline-block border border-white/20 px-12 py-5 rounded-full font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all"
+                    href="mailto:hello@pauljoyce.com">
+                    Contact Me
+                </a>
+                <div class="mt-20 flex justify-center gap-8 text-white/40">
+                    <a class="hover:text-primary transition-colors" href="#"><span
+                            class="material-symbols-outlined">share</span></a>
+                    <a class="hover:text-primary transition-colors" href="#"><span
+                            class="material-symbols-outlined">music_note</span></a>
+                    <a class="hover:text-primary transition-colors" href="#"><span
+                            class="material-symbols-outlined">podcasts</span></a>
+                    <a class="hover:text-primary transition-colors" href="mailto:hello@pauljoyce.com"><span
+                            class="material-symbols-outlined">mail</span></a>
+                </div>
+            </div>
+            <div
+                class="flex flex-col md:flex-row items-center justify-between gap-6 text-sm text-slate-500 font-medium">
+                <p>© 2024 Paul Joyce. All rights reserved.</p>
+                <div class="flex gap-8 uppercase tracking-widest text-[10px]">
+                    <a class="hover:text-primary" href="#">Privacy Policy</a>
+                    <a class="hover:text-primary" href="#">Terms of Service</a>
+                </div>
+                <a href="../paul_joyce_portfolio_home/code.html"
+                    class="p-4 bg-white dark:bg-slate-800 rounded-full shadow-lg cursor-pointer hover:scale-110 transition-transform block">
+                    <span class="material-symbols-outlined text-slate-900 dark:text-white">home</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Skills data
+        const skills = [
+            { name: "Orchestral Arrangement", value: 98 },
+            { name: "Music Production", value: 95 },
+            { name: "Cinematic Scoring", value: 93 },
+            { name: "Sound Design", value: 87 },
+            { name: "Session Conducting", value: 82 },
+            { name: "Piano Performance", value: 90 },
+        ];
+
+        const skillsGrid = document.getElementById('skills-grid');
+        skillsGrid.innerHTML = skills.map(s => `
+  <div class="reveal-up">
+    <div class="flex justify-between mb-2">
+      <span class="text-sm font-semibold">${s.name}</span>
+      <span class="text-sm text-primary font-bold">${s.value}%</span>
+    </div>
+    <div class="w-full h-2 bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
+      <div class="h-full bg-primary rounded-full skill-bar-fill" data-value="${s.value}"></div>
+    </div>
+  </div>
+`).join('');
+
+        // Dark mode
+        document.getElementById('dark-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark') ? '1' : '0');
+        });
+        if (localStorage.getItem('darkMode') === '1') document.documentElement.classList.add('dark');
+
+        // Mobile menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Intersection Observer for reveal
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal-up, .timeline-item').forEach(el => revealObserver.observe(el));
+
+        // Skills bar animation observer
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+                        bar.style.width = bar.dataset.value + '%';
+                    });
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.3 });
+        if (skillsGrid) skillObserver.observe(skillsGrid);
+
+        // Immediately reveal anything in viewport
+        document.querySelectorAll('.reveal-up, .timeline-item').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight * 0.9) {
+                el.classList.add('revealed');
+            }
+        });
+    </script>
+</body>
+
+</html>

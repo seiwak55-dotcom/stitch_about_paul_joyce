@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Paul Joyce | Immersive Works</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#22c55e",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#152111",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+        }
+
+        .dark .glass-effect {
+            background: rgba(21, 33, 17, 0.85);
+        }
+
+        .carousel-slide {
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .side-album {
+            transition: all 0.5s ease;
+        }
+
+        @keyframes progress-fill {
+            from {
+                width: 0%
+            }
+        }
+
+        .progress-animate {
+            animation: progress-fill 0.3s ease;
+        }
+
+        .timestamp-btn.active {
+            background: rgba(34, 197, 94, 0.12);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .progress-thumb {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%) translateX(-50%);
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased selection:bg-primary/30">
+
+    <!-- Header Navigation -->
+    <nav id="main-nav"
+        class="fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-md bg-white/80 dark:bg-zinc-950/80 border-b border-slate-200/50 dark:border-white/10 px-6 py-4 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a class="flex items-center space-x-2" href="../paul_joyce_portfolio_home/code.html">
+                <span class="font-display text-xl font-extrabold tracking-tighter">PAUL<span
+                        class="text-primary">JOYCE</span></span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <a class="hover:text-primary transition-colors" href="../paul_joyce_portfolio_home/code.html">Home</a>
+                <a class="text-primary font-bold" href="code.html">Work</a>
+                <a class="hover:text-primary transition-colors" href="../about_paul_joyce/about.html">About</a>
+                <a class="hover:text-primary transition-colors"
+                    href="../paul_joyce_portfolio_home/code.html#contact">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button id="dark-toggle"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    title="Toggle dark mode">
+                    <span class="material-symbols-outlined text-xl dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl hidden dark:block">light_mode</span>
+                </button>
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <a href="../paul_joyce_portfolio_home/code.html#contact"
+                    class="hidden md:block bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all">
+                    Hire Paul
+                </a>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden px-6 py-4 border-t border-slate-200 dark:border-white/10 space-y-3 text-sm font-medium uppercase tracking-widest">
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_portfolio_home/code.html">Home</a>
+            <a class="block text-primary font-bold py-2" href="code.html">Work</a>
+            <a class="block hover:text-primary transition-colors py-2" href="../about_paul_joyce/about.html">About</a>
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_portfolio_home/code.html#contact">Contact</a>
+            <a class="block w-full text-center bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary transition-all mt-2"
+                href="../paul_joyce_portfolio_home/code.html#contact">Hire Paul</a>
+        </div>
+    </nav>
+
+    <!-- Main Hero Carousel -->
+    <section class="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden bg-zinc-950">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0 transition-all duration-1000" id="hero-bg"
+            style="background: radial-gradient(ellipse at center, rgba(34,197,94,0.15) 0%, transparent 70%);"></div>
+        <!-- Ambient blur images -->
+        <div class="absolute inset-0 opacity-15 blur-3xl scale-150 pointer-events-none overflow-hidden">
+            <img id="bg-blur-img" class="w-full h-full object-cover transition-all duration-1000"
+                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZG36zOAt6jm2FrUEcizONDRdQ3GPS-h-2pNoLotaGrSGbdjjvQh7RmyD79a9nevC2I_Fpf45Ofp_cRWt80neL0g-YMRzumV-7VEYIKY5t4k_FBxQ9x4IknXB4cNU_obKCq2udtJa-x8ixJkPLhZkszTDFjg9n-EsyUbzSMXOYUmlfsXDqyf5IwAhh1YBb41yUcNmVYfecE5wP46yw4sHhw3KUeQapqPbVZtwqwc9W15uruOpncNF50N7CYRbgvMRv1uYp2XV1JSVx"
+                alt="bg">
+        </div>
+
+        <div class="relative z-10 w-full max-w-7xl px-4 flex flex-col items-center">
+            <!-- Album Carousel Row -->
+            <div class="flex items-center justify-center gap-8 w-full select-none" id="carousel-row">
+                <!-- Left Album -->
+                <div class="hidden lg:block w-56 aspect-square opacity-25 grayscale blur-[2px] transform -rotate-6 scale-90 shrink-0 side-album cursor-pointer"
+                    id="left-album" onclick="prevAlbum()">
+                    <img class="w-full h-full object-cover rounded-xl shadow-2xl" id="left-album-img" src=""
+                        alt="Previous" />
+                </div>
+
+                <!-- Active Album -->
+                <div class="flex flex-col items-center gap-6 w-full max-w-md" id="active-album-area">
+                    <div class="relative group cursor-pointer" id="main-album-wrap">
+                        <img class="w-full aspect-square object-cover rounded-xl shadow-[0_40px_100px_-20px_rgba(0,0,0,0.8)] border border-white/10 transition-all duration-500"
+                            id="main-album-img" src="" alt="Active Album" />
+                        <!-- Release Badge -->
+                        <div id="release-badge"
+                            class="absolute -top-4 -right-4 bg-primary text-black px-4 py-2 rounded-lg font-bold text-xs shadow-lg hidden">
+                            LATEST RELEASE</div>
+                        <!-- Play overlay -->
+                        <div
+                            class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity rounded-xl bg-black/30">
+                            <button id="hero-play-btn"
+                                class="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center text-black hover:scale-110 transition-transform shadow-2xl">
+                                <span class="material-symbols-outlined !text-5xl" id="hero-play-icon">play_arrow</span>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Metadata -->
+                    <div class="text-center">
+                        <h2 class="text-white text-3xl font-extrabold tracking-tight mb-2" id="album-title">Album A
+                            (2024)</h2>
+                        <div class="flex items-center justify-center gap-3 mb-4" id="album-tags"></div>
+                        <p class="text-zinc-400 text-sm max-w-sm mx-auto leading-relaxed" id="album-desc">Loading…</p>
+                    </div>
+                    <!-- Playback Controls -->
+                    <div class="w-full max-w-md space-y-3">
+                        <div class="flex items-center justify-center gap-6 text-white">
+                            <button class="hover:text-primary transition-colors" id="carousel-prev-btn"><span
+                                    class="material-symbols-outlined !text-3xl">skip_previous</span></button>
+                            <button
+                                class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-black hover:scale-105 transition-transform"
+                                id="carousel-play-btn">
+                                <span class="material-symbols-outlined !text-4xl"
+                                    id="carousel-play-icon">play_arrow</span>
+                            </button>
+                            <button class="hover:text-primary transition-colors" id="carousel-next-btn"><span
+                                    class="material-symbols-outlined !text-3xl">skip_next</span></button>
+                        </div>
+                        <!-- Progress -->
+                        <div class="relative w-full h-2 bg-white/10 rounded-full overflow-visible cursor-pointer"
+                            id="carousel-progress-track">
+                            <div class="absolute top-0 left-0 h-full bg-primary rounded-full transition-none"
+                                id="carousel-progress" style="width:0%"></div>
+                            <div class="progress-thumb" id="carousel-thumb" style="left:0%"></div>
+                        </div>
+                        <div
+                            class="flex justify-between text-[10px] text-zinc-500 font-bold tracking-tighter uppercase">
+                            <span id="carousel-current">0:00</span>
+                            <span id="carousel-duration">3:42</span>
+                        </div>
+                    </div>
+                    <!-- Album nav dots -->
+                    <div class="flex gap-2 mt-2" id="carousel-dots"></div>
+                </div>
+
+                <!-- Right Album -->
+                <div class="hidden lg:block w-56 aspect-square opacity-25 grayscale blur-[2px] transform rotate-6 scale-90 shrink-0 side-album cursor-pointer"
+                    id="right-album" onclick="nextAlbum()">
+                    <img class="w-full h-full object-cover rounded-xl shadow-2xl" id="right-album-img" src=""
+                        alt="Next" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Hint -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 text-zinc-500 flex flex-col items-center gap-2">
+            <span class="text-[10px] uppercase font-bold tracking-[0.3em]">Scroll to explore</span>
+            <div class="w-px h-12 bg-gradient-to-b from-primary to-transparent"></div>
+        </div>
+    </section>
+
+    <!-- Deep Editorial Content -->
+    <main class="max-w-7xl mx-auto px-8 py-24 space-y-32" id="editorial">
+        <!-- Section A: Overview -->
+        <section class="grid md:grid-cols-12 gap-12 items-start">
+            <div class="md:col-span-4">
+                <h3 class="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">01 / Overview</h3>
+                <h4 class="text-3xl font-extrabold tracking-tight" id="detail-title">The Vision</h4>
+            </div>
+            <div class="md:col-span-8">
+                <p class="text-2xl font-light text-slate-700 dark:text-slate-300 leading-relaxed max-w-2xl"
+                    id="detail-overview">
+                    Loading album description...
+                </p>
+            </div>
+        </section>
+
+        <!-- Contribution & Listen For grid -->
+        <section class="grid md:grid-cols-2 gap-24">
+            <div>
+                <h3 class="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-8">02 / My Contribution</h3>
+                <ul class="space-y-6" id="contribution-list">
+                    <!-- Populated by JS -->
+                </ul>
+            </div>
+            <div>
+                <h3 class="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-8">03 / Listen For</h3>
+                <div class="space-y-4" id="listen-for-list">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Notes -->
+        <section
+            class="border-t border-slate-200 dark:border-slate-800 pt-12 flex flex-col md:flex-row justify-between gap-12"
+            id="tech-section">
+            <div>
+                <h3 class="text-primary text-xs font-bold uppercase tracking-[0.2em] mb-4">Technical Notes</h3>
+                <div class="grid grid-cols-2 gap-x-12 gap-y-4 text-xs font-medium text-slate-500" id="tech-notes">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+            <div class="flex gap-4 items-start">
+                <a class="flex items-center gap-2 px-6 py-3 bg-zinc-900 dark:bg-white text-white dark:text-zinc-950 rounded-lg text-xs font-bold uppercase tracking-widest hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined !text-lg">headphones</span>Spotify
+                </a>
+                <a class="flex items-center gap-2 px-6 py-3 border border-slate-300 dark:border-slate-700 rounded-lg text-xs font-bold uppercase tracking-widest hover:border-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined !text-lg">play_arrow</span>YouTube
+                </a>
+            </div>
+        </section>
+
+        <!-- Back link -->
+        <section class="text-center pt-8">
+            <a class="inline-flex items-center gap-4 group" href="../paul_joyce_portfolio_home/code.html#work">
+                <span
+                    class="material-symbols-outlined text-4xl group-hover:-translate-x-2 transition-transform">west</span>
+                <span
+                    class="text-3xl font-display font-bold border-b-2 border-slate-900 dark:border-slate-100 pb-2">Back
+                    to The Jukebox</span>
+            </a>
+        </section>
+    </main>
+
+    <!-- Sticky Footer Player -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 w-full max-w-4xl px-4 z-50">
+        <div
+            class="glass-effect rounded-2xl border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.15)] p-4 flex items-center justify-between gap-6 dark:bg-zinc-900/90 dark:border-zinc-800">
+            <div class="flex items-center gap-3 min-w-0">
+                <img class="w-12 h-12 rounded-lg object-cover flex-shrink-0" id="footer-thumb" src="" alt="Track" />
+                <div class="truncate">
+                    <p class="text-sm font-bold truncate" id="footer-track">Loading…</p>
+                    <p class="text-[10px] text-primary font-bold uppercase tracking-widest" id="footer-album">Paul Joyce
+                    </p>
+                </div>
+            </div>
+            <div class="flex-1 max-w-md hidden sm:flex flex-col gap-2">
+                <div class="flex items-center gap-4 text-slate-900 dark:text-slate-100">
+                    <button class="hover:text-primary transition-colors" id="footer-prev"><span
+                            class="material-symbols-outlined !text-xl">skip_previous</span></button>
+                    <button
+                        class="w-8 h-8 bg-primary text-black rounded-full flex items-center justify-center hover:scale-105 transition-transform"
+                        id="footer-play">
+                        <span class="material-symbols-outlined !text-xl" id="footer-play-icon">play_arrow</span>
+                    </button>
+                    <button class="hover:text-primary transition-colors" id="footer-next"><span
+                            class="material-symbols-outlined !text-xl">skip_next</span></button>
+                    <div class="flex-1 relative h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-full ml-2 cursor-pointer"
+                        id="footer-progress-track">
+                        <div class="absolute inset-0 bg-primary rounded-full transition-none" id="footer-progress"
+                            style="width:0%"></div>
+                    </div>
+                    <span class="text-[10px] font-mono text-slate-500 min-w-[56px]" id="footer-time">0:00 / 3:42</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-4">
+                <button class="text-slate-500 hover:text-primary transition-colors"><span
+                        class="material-symbols-outlined">volume_up</span></button>
+                <a href="../paul_joyce_portfolio_home/code.html"
+                    class="text-slate-500 hover:text-primary transition-colors" title="Go to Home">
+                    <span class="material-symbols-outlined">home</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== Album Data =====
+        const albums = [
+            {
+                img: "/img/music1.png",
+                title: "Six Choruses (V. The Angel)", track: "Six Choruses (V. The Angel)", tags: ["Orchestrator", "Producer"],
+                desc: "A cinematic journey blending neo-classical textures with electronic synthesis.",
+                overview: "Six Choruses (V. The Angel) is a choral and orchestral work that explores the interplay between human voice and orchestral texture, creating a soundscape of ethereal beauty.",
+                contributions: [
+                    { num: "01", title: "Orchestration", desc: "Full orchestral arrangement supporting the choral writing." },
+                    { num: "02", title: "Production", desc: "Studio production and session direction." },
+                ],
+                listenFor: [
+                    { time: "30", label: "Opening Choral Entry" },
+                    { time: "90", label: "Orchestral Swell" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Spitfire Audio BBCSO" },
+                duration: "3:42", audio: "music1.mp3", latest: true,
+            },
+            {
+                img: "/img/music2.jpeg",
+                title: "Live...", track: "Live...", tags: ["Composer", "Producer"],
+                desc: "A live recording capturing raw energy and emotional depth in real time.",
+                overview: "Live... is a document of performance — an unfiltered recording that captures the spontaneity and intensity of a live session, with all the imperfections that make it human.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original compositions performed live." },
+                    { num: "02", title: "Production", desc: "Live recording production and post-mix." },
+                ],
+                listenFor: [
+                    { time: "20", label: "Live Room Ambience" },
+                    { time: "85", label: "Emotional Climax" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Live Recording" },
+                duration: "4:15", audio: "music2.mp3", latest: false,
+            },
+            {
+                img: "/img/music3.jpeg",
+                title: "The Beauty In Your Eyes", track: "The Beauty In Your Eyes", tags: ["Composer", "Orchestrator"],
+                desc: "A deeply personal piece exploring beauty through orchestral and electronic textures.",
+                overview: "The Beauty In Your Eyes is an intimate exploration of perception and emotion, using layered strings and subtle electronics to create a world of delicate introspection.",
+                contributions: [
+                    { num: "01", title: "Orchestration", desc: "String writing and orchestral arrangement." },
+                    { num: "02", title: "Electronic Textures", desc: "Subtle electronic layers complementing the acoustic writing." },
+                ],
+                listenFor: [
+                    { time: "45", label: "String Entry" },
+                    { time: "130", label: "Electronic Layer Emerges" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Berlin Strings, Spitfire" },
+                duration: "5:01", audio: "music3.mp3", latest: false,
+            },
+            {
+                img: "/img/music4.jpeg",
+                title: "Laurel", track: "Laurel", tags: ["Composer", "Producer"],
+                desc: "A reflective piece evoking triumph and transience through orchestral warmth.",
+                overview: "Laurel draws on classical idioms to explore the bittersweet nature of achievement — the warmth of brass and the tenderness of strings intertwining in a meditation on memory.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original thematic writing for brass and strings." },
+                    { num: "02", title: "Production", desc: "Full production and mix." },
+                ],
+                listenFor: [
+                    { time: "15", label: "Brass Theme Introduction" },
+                    { time: "100", label: "String Counter-melody" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "VSL, Spitfire Symphonic" },
+                duration: "3:58", audio: "music4.mp3", latest: false,
+            },
+            {
+                img: "/img/music5.jpeg",
+                title: "Each Other", track: "Each Other", tags: ["Composer", "Arranger"],
+                desc: "A collaborative work exploring connection and dialogue through interweaving musical lines.",
+                overview: "Each Other is built on a dialogue between instruments — call and response, tension and resolution, written to evoke the complexity of human relationships.",
+                contributions: [
+                    { num: "01", title: "Arrangement", desc: "Interweaving melodic lines for ensemble." },
+                    { num: "02", title: "Production", desc: "Studio production and session direction." },
+                ],
+                listenFor: [
+                    { time: "25", label: "Opening Dialogue" },
+                    { time: "110", label: "Harmonic Resolution" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Chamber Ensemble Libraries" },
+                duration: "6:12", audio: "music5.mp3", latest: false,
+            },
+            {
+                img: "/img/music6.jpeg",
+                title: "A la mani", track: "A la mani", tags: ["Composer", "Sound Design"],
+                desc: "A fusion of traditional Catalan melody and contemporary orchestration.",
+                overview: "A la mani draws inspiration from Catalan folk tradition, reimagined through contemporary orchestral and electronic textures in a work that bridges heritage and innovation.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original work inspired by Catalan folk melodies." },
+                    { num: "02", title: "Orchestration", desc: "Full orchestral and electronic arrangement." },
+                ],
+                listenFor: [
+                    { time: "10", label: "Folk Theme Statement" },
+                    { time: "95", label: "Electronic Integration" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Custom Samples, Spitfire" },
+                duration: "7:24", audio: "music6.mp3", latest: false,
+            },
+            {
+                img: "/img/music7.jpeg",
+                title: "Tenki Tími", track: "Tenki Tími", tags: ["Composer", "Producer"],
+                desc: "An Icelandic-inspired meditation on time, weather and transience.",
+                overview: "Tenki Tími (Weather Time) is inspired by the Icelandic relationship with nature — unpredictable, vast and humbling. The music shifts between stillness and turbulence, mirroring the landscape.",
+                contributions: [
+                    { num: "01", title: "Composition", desc: "Original theme and development for orchestra." },
+                    { num: "02", title: "Production", desc: "Atmospheric production with field recordings." },
+                ],
+                listenFor: [
+                    { time: "20", label: "Storm Theme Builds" },
+                    { time: "120", label: "Calm Resolution" },
+                ],
+                tech: { DAW: "Logic Pro X", Libraries: "Spitfire, Field Recordings" },
+                duration: "4:30", audio: "music7.mp3", latest: false,
+            },
+        ];
+
+
+        let currentAlbum = 0;
+        let isPlaying = false;
+
+        // ===== HTML5 Audio Engine =====
+        const audioPlayer = new Audio();
+        audioPlayer.volume = 0.8;
+
+        function formatTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgressUI() {
+            const current = audioPlayer.currentTime;
+            const total = audioPlayer.duration || 0;
+            const pct = total > 0 ? (current / total) * 100 : 0;
+            document.getElementById('carousel-progress').style.width = pct + '%';
+            document.getElementById('carousel-thumb').style.left = pct + '%';
+            document.getElementById('footer-progress').style.width = pct + '%';
+            document.getElementById('carousel-current').textContent = formatTime(current);
+            document.getElementById('footer-time').textContent = `${formatTime(current)} / ${formatTime(total)}`;
+        }
+
+        audioPlayer.addEventListener('timeupdate', updateProgressUI);
+        audioPlayer.addEventListener('ended', () => { nextAlbum(); });
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            document.getElementById('carousel-duration').textContent = formatTime(audioPlayer.duration);
+        });
+
+        function formatTimestamp(totalSec) {
+            return formatTime(parseInt(totalSec));
+        }
+
+        function renderAlbum(index) {
+            const a = albums[index];
+            const prev = albums[(index - 1 + albums.length) % albums.length];
+            const next = albums[(index + 1) % albums.length];
+
+            document.getElementById('main-album-img').src = a.img;
+            document.getElementById('bg-blur-img').src = a.img;
+            document.getElementById('album-title').textContent = a.title;
+            document.getElementById('album-desc').textContent = a.desc;
+
+            // Badge
+            document.getElementById('release-badge').classList.toggle('hidden', !a.latest);
+
+            // Tags
+            const tagsEl = document.getElementById('album-tags');
+            tagsEl.innerHTML = a.tags.map(t =>
+                `<span class="px-3 py-1 border border-primary/40 text-primary text-[10px] font-bold uppercase tracking-widest rounded">${t}</span>`
+            ).join('');
+
+            // Duration
+            document.getElementById('carousel-duration').textContent = a.duration;
+            document.getElementById('footer-time').textContent = `0:00 / ${a.duration}`;
+
+            // Side albums
+            document.getElementById('left-album-img').src = prev.img;
+            document.getElementById('right-album-img').src = next.img;
+
+            // Dots
+            const dots = document.getElementById('carousel-dots');
+            dots.innerHTML = albums.map((_, i) =>
+                `<div class="w-2 h-2 rounded-full transition-all ${i === index ? 'bg-white scale-125' : 'bg-white/30'}" onclick="goToAlbum(${i})" style="cursor:pointer"></div>`
+            ).join('');
+
+            // Editorial section
+            document.getElementById('detail-title').textContent = a.title.split(' (')[0];
+            document.getElementById('detail-overview').textContent = a.overview;
+
+            // Contributions
+            document.getElementById('contribution-list').innerHTML = a.contributions.map(c => `
+    <li class="flex items-start gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
+      <span class="text-slate-300 font-bold">${c.num}</span>
+      <div>
+        <p class="font-bold text-lg">${c.title}</p>
+        <p class="text-sm text-slate-500">${c.desc}</p>
+      </div>
+    </li>
+  `).join('');
+
+            // Listen For
+            document.getElementById('listen-for-list').innerHTML = a.listenFor.map(l => `
+    <button class="timestamp-btn w-full text-left group flex items-center justify-between p-4 rounded-xl bg-white dark:bg-zinc-900 shadow-sm border border-transparent hover:border-primary/20 transition-all" data-seconds="${l.time}" onclick="seekTo(${l.time})">
+      <div class="flex gap-4 items-center">
+        <span class="text-primary font-bold font-mono">${formatTimestamp(l.time)}</span>
+        <span class="text-sm font-medium">${l.label}</span>
+      </div>
+      <span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">play_circle</span>
+    </button>
+  `).join('');
+
+            // Tech notes
+            document.getElementById('tech-notes').innerHTML = Object.entries(a.tech).map(([k, v]) => `
+    <div><p class="text-slate-900 dark:text-slate-100 uppercase mb-1">${k}</p><p>${v}</p></div>
+  `).join('');
+
+            // Footer player
+            document.getElementById('footer-thumb').src = a.img;
+            document.getElementById('footer-track').textContent = a.track;
+            document.getElementById('footer-album').textContent = a.title;
+        }
+
+        function setPlayIcons(playing) {
+            ['hero-play-icon', 'carousel-play-icon', 'footer-play-icon'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = playing ? 'pause' : 'play_arrow';
+            });
+        }
+
+        function setPlayState(state) {
+            isPlaying = state;
+            setPlayIcons(state);
+            if (state) {
+                audioPlayer.play().catch(() => { });
+            } else {
+                audioPlayer.pause();
+            }
+        }
+
+        function togglePlay() {
+            if (!audioPlayer.src || audioPlayer.src === window.location.href) {
+                const a = albums[currentAlbum];
+                audioPlayer.src = a.audio;
+                audioPlayer.load();
+            }
+            setPlayState(!isPlaying);
+        }
+
+        function goToAlbum(index) {
+            currentAlbum = index;
+            const a = albums[index];
+            renderAlbum(index);
+            // Reset progress UI
+            document.getElementById('carousel-progress').style.width = '0%';
+            document.getElementById('carousel-thumb').style.left = '0%';
+            document.getElementById('footer-progress').style.width = '0%';
+            document.getElementById('carousel-current').textContent = '0:00';
+            // Load audio
+            audioPlayer.src = a.audio;
+            audioPlayer.load();
+            if (isPlaying) {
+                audioPlayer.play().catch(() => { });
+            }
+        }
+        function nextAlbum() { goToAlbum((currentAlbum + 1) % albums.length); }
+        function prevAlbum() { goToAlbum((currentAlbum - 1 + albums.length) % albums.length); }
+
+        function seekTo(seconds) {
+            if (audioPlayer.duration) {
+                audioPlayer.currentTime = parseInt(seconds);
+            }
+            if (!isPlaying) setPlayState(true);
+        }
+
+        // Progress track click to seek
+        ['carousel-progress-track', 'footer-progress-track'].forEach(id => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.addEventListener('click', (e) => {
+                const rect = el.getBoundingClientRect();
+                const ratio = (e.clientX - rect.left) / rect.width;
+                if (audioPlayer.duration) {
+                    audioPlayer.currentTime = ratio * audioPlayer.duration;
+                }
+            });
+        });
+
+        // Button wiring
+        document.getElementById('hero-play-btn').addEventListener('click', togglePlay);
+        document.getElementById('carousel-play-btn').addEventListener('click', togglePlay);
+        document.getElementById('footer-play').addEventListener('click', togglePlay);
+        document.getElementById('carousel-prev-btn').addEventListener('click', prevAlbum);
+        document.getElementById('carousel-next-btn').addEventListener('click', nextAlbum);
+        document.getElementById('footer-prev').addEventListener('click', prevAlbum);
+        document.getElementById('footer-next').addEventListener('click', nextAlbum);
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextAlbum();
+            else if (e.key === 'ArrowLeft') prevAlbum();
+            else if (e.key === ' ') { e.preventDefault(); togglePlay(); }
+        });
+
+        // Touch/Swipe support
+        let touchStartX = 0;
+        document.getElementById('carousel-row').addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+        document.getElementById('carousel-row').addEventListener('touchend', e => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 50) { dx < 0 ? nextAlbum() : prevAlbum(); }
+        });
+
+        // Dark mode
+        document.getElementById('dark-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark') ? '1' : '0');
+        });
+        if (localStorage.getItem('darkMode') === '1') document.documentElement.classList.add('dark');
+
+        // Mobile menu
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // Init
+        goToAlbum(0);
+    </script>
+</body>
+
+</html>

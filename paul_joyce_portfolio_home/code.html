@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Paul Joyce | Orchestrator &amp; Producer</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#22c55e",
+                        "background-light": "#ffffff",
+                        "background-dark": "#0a0a0a",
+                    },
+                    fontFamily: {
+                        display: ["Plus Jakarta Sans", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        };
+    </script>
+    <style type="text/tailwindcss">
+        .kinetic-text { line-height: 0.85; letter-spacing: -0.05em; }
+    .glass-nav { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .jukebox-ring {
+        position: relative; width: 700px; height: 700px;
+        border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .jukebox-item {
+        position: absolute; width: 160px; height: 160px;
+        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); cursor: pointer;
+    }
+    .item-1 { transform: rotate(0deg) translate(300px) rotate(0deg); }
+    .item-2 { transform: rotate(51.4deg) translate(300px) rotate(-51.4deg); }
+    .item-3 { transform: rotate(102.8deg) translate(300px) rotate(-102.8deg); }
+    .item-4 { transform: rotate(154.3deg) translate(300px) rotate(-154.3deg); }
+    .item-5 { transform: rotate(205.7deg) translate(300px) rotate(-205.7deg); }
+    .item-6 { transform: rotate(257.1deg) translate(300px) rotate(-257.1deg); }
+    .item-7 { transform: rotate(308.6deg) translate(300px) rotate(-308.6deg); }
+    .vinyl-record {
+        position: absolute; top: 50%; right: -20px; transform: translateY(-50%);
+        width: 140px; height: 140px; background: #111; border-radius: 50%; z-index: -1;
+        background: radial-gradient(circle at center, #333 0%, #111 40%, #000 100%);
+        border: 1px solid rgba(255,255,255,0.1);
+    }
+    .album-sleeve { position: relative; z-index: 10; width: 100%; height: 100%; box-shadow: 0 15px 35px rgba(0,0,0,0.4); border-radius: 4px; overflow: hidden; }
+    .active-item .album-sleeve { outline: 3px solid #22c55e; outline-offset: 8px; box-shadow: 0 0 30px rgba(34, 197, 94, 0.4); }
+    
+    @media (max-width: 768px) {
+        .jukebox-ring { 
+            width: 100%; height: 400px; transform: translateY(-40px); 
+            perspective: 1000px; transform-style: preserve-3d;
+        }
+        .jukebox-item { 
+            width: 130px; height: 130px; 
+            /* Reset PC rotations on mobile */
+            rotate: none !important;
+        }
+        .vinyl-record { width: 110px; height: 110px; right: -15px; }
+        .jukebox-center-panel { 
+            width: 180px; height: 180px; padding: 1rem; 
+            transform: translateY(120px) !important;
+            border-radius: 2rem;
+            z-index: 50;
+        }
+        .jukebox-center-panel h3 { font-size: 0.875rem; }
+        .jukebox-center-panel #jukebox-play { width: 3rem; height: 3rem; }
+        .jukebox-center-panel #jukebox-play-icon { font-size: 1.5rem; }
+    }
+    .reveal-on-scroll { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .revealed { opacity: 1; transform: translateY(0); }
+    .progress-bar-track { cursor: pointer; }
+    @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+    .vinyl-spin { animation: spin-slow 3s linear infinite; }
+    .player-bar { transition: bottom 0.3s ease; }
+</style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-sans selection:bg-primary selection:text-white">
+
+    <!-- NAV -->
+    <nav id="main-nav"
+        class="fixed top-0 w-full z-50 transition-all duration-300 glass-nav border-b border-slate-200/50 dark:border-white/10 px-6 py-4 md:px-12">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <a class="flex items-center space-x-2" href="code.html">
+                <span class="font-display text-xl font-extrabold tracking-tighter">PAUL<span
+                        class="text-primary">JOYCE</span></span>
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium uppercase tracking-widest">
+                <a class="hover:text-primary transition-colors" href="code.html">Home</a>
+                <a class="hover:text-primary transition-colors"
+                    href="../paul_joyce_immersive_works_carousel/code.html">Work</a>
+                <a class="hover:text-primary transition-colors" href="../about_paul_joyce/about.html">About</a>
+                <a class="hover:text-primary transition-colors" href="#contact">Contact</a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <!-- Dark Mode Toggle -->
+                <button id="dark-toggle"
+                    class="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                    title="Toggle dark mode">
+                    <span class="material-symbols-outlined text-xl dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-xl hidden dark:block">light_mode</span>
+                </button>
+                <!-- Mobile Menu -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <a href="#contact"
+                    class="hidden md:block bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all">
+                    Hire Paul
+                </a>
+            </div>
+        </div>
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu"
+            class="hidden md:hidden px-6 py-4 border-t border-slate-200 dark:border-white/10 space-y-3 text-sm font-medium uppercase tracking-widest">
+            <a class="block hover:text-primary transition-colors py-2" href="code.html">Home</a>
+            <a class="block hover:text-primary transition-colors py-2"
+                href="../paul_joyce_immersive_works_carousel/code.html">Work</a>
+            <a class="block hover:text-primary transition-colors py-2" href="../about_paul_joyce/about.html">About</a>
+            <a class="block hover:text-primary transition-colors py-2" href="#contact">Contact</a>
+            <a class="block w-full text-center bg-slate-900 dark:bg-white text-white dark:text-black px-5 py-2 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-primary transition-all mt-2"
+                href="#contact">Hire Paul</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="relative h-screen flex items-center overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img alt="Paul Joyce portrait" class="w-full h-full object-cover grayscale brightness-75 contrast-125"
+                src="TOP_hero2.jpg" />
+            <div
+                class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-transparent to-transparent md:block hidden">
+            </div>
+            <div class="absolute inset-0 bg-black/40 md:hidden"></div>
+        </div>
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="max-w-4xl">
+                <p class="text-primary font-bold tracking-[0.3em] uppercase mb-6 flex items-center reveal-on-scroll">
+                    <span class="w-8 h-[2px] bg-primary mr-4"></span>
+                    Orchestrator / Arranger / Producer
+                </p>
+                <h1 class="font-display font-extrabold text-7xl md:text-[9rem] kinetic-text mb-8 text-white reveal-on-scroll"
+                    style="transition-delay:0.1s">
+                    CRAFTING <br />
+                    <span class="text-primary italic">SONIC</span> <br />
+                    STORIES.
+                </h1>
+                <p class="text-lg md:text-xl text-slate-200 max-w-lg leading-relaxed font-light reveal-on-scroll"
+                    style="transition-delay:0.2s">
+                    Designing high-end cinematic soundscapes for global brands and independent artists.
+                </p>
+                <div class="flex gap-4 mt-10 reveal-on-scroll" style="transition-delay:0.3s">
+                    <a href="#work"
+                        class="bg-primary text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-green-600 transition-all">
+                        Explore Work
+                    </a>
+                    <a href="../about_paul_joyce/about.html"
+                        class="border border-white/40 text-white px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:border-primary hover:text-primary transition-all">
+                        About Me
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce text-white">
+            <a href="#work"><span class="material-symbols-outlined text-3xl opacity-50">expand_more</span></a>
+        </div>
+    </section>
+
+    <!-- JUKEBOX WORK SECTION -->
+    <section class="py-32 overflow-hidden relative" id="work" style="background:#0a0a0a;">
+        <!-- Background Video -->
+        <div class="absolute inset-0 z-0 overflow-hidden">
+            <video id="jukebox-bg-video" class="w-full h-full object-cover"
+                style="opacity:0.30;transition:opacity 0.8s ease;" autoplay muted loop playsinline>
+                <source src="music1.mov" type="video/quicktime">
+                <source src="music1.mov" type="video/mp4">
+            </video>
+        </div>
+        <div class="container mx-auto px-6 md:px-12 flex flex-col items-center relative z-10">
+            <div class="text-center mb-16 reveal-on-scroll">
+                <span class="text-xs font-bold text-slate-400 tracking-[0.4em] uppercase">Featured Work</span>
+                <h2 class="font-display text-4xl font-extrabold mt-2 text-white">THE JUKEBOX</h2>
+                <p class="text-slate-400 text-sm mt-2">Click an album to select</p>
+            </div>
+            <div class="relative flex items-center justify-center w-full max-w-6xl h-[700px]">
+                <!-- Center Now Playing Panel -->
+                <div id="jukebox-center-panel"
+                    class="jukebox-center-panel absolute z-30 text-center w-64 p-8 bg-white dark:bg-zinc-900 rounded-full shadow-2xl border border-slate-100 dark:border-white/5 aspect-square flex flex-col items-center justify-center">
+                    <span class="text-[10px] font-bold text-primary tracking-widest uppercase mb-1">Now Playing</span>
+                    <h3 id="jukebox-title" class="font-display text-base font-extrabold leading-tight mb-1">Six Choruses
+                        (V. The Angel)</h3>
+                    <p id="jukebox-meta"
+                        class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-tighter mb-4">Showreel •
+                        2024</p>
+                    <div class="flex items-center space-x-4">
+                        <button id="jukebox-prev"
+                            class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors text-2xl">skip_previous</button>
+                        <button id="jukebox-play"
+                            class="w-14 h-14 rounded-full bg-primary text-white flex items-center justify-center hover:scale-105 transition-transform shadow-lg shadow-primary/20">
+                            <span class="material-symbols-outlined text-3xl fill-current"
+                                id="jukebox-play-icon">play_arrow</span>
+                        </button>
+                        <button id="jukebox-next"
+                            class="material-symbols-outlined text-slate-400 hover:text-primary transition-colors text-2xl">skip_next</button>
+                    </div>
+                    <a id="jukebox-details-link" href="../paul_joyce_immersive_works_carousel/code.html"
+                        class="mt-4 text-[10px] text-primary font-bold uppercase tracking-widest hover:underline">View
+                        Details →</a>
+                </div>
+                <!-- Jukebox Ring -->
+                <div class="jukebox-ring" id="jukebox-ring">
+                    <div class="jukebox-item item-1 active-item" data-index="0">
+                        <div class="album-sleeve"><img alt="Six Choruses (V. The Angel)"
+                                class="w-full h-full object-cover" src="/img/music1.png" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-2 opacity-60" data-index="1">
+                        <div class="album-sleeve"><img alt="Live..." class="w-full h-full object-cover"
+                                src="/img/music2.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-3 opacity-60" data-index="2">
+                        <div class="album-sleeve"><img alt="The Beauty In Your Eyes" class="w-full h-full object-cover"
+                                src="/img/music3.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-4 opacity-60" data-index="3">
+                        <div class="album-sleeve"><img alt="Laurel" class="w-full h-full object-cover"
+                                src="/img/music4.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-5 opacity-60" data-index="4">
+                        <div class="album-sleeve"><img alt="Each Other" class="w-full h-full object-cover"
+                                src="/img/music5.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-6 opacity-60" data-index="5">
+                        <div class="album-sleeve"><img alt="A la mani" class="w-full h-full object-cover"
+                                src="/img/music6.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                    <div class="jukebox-item item-7 opacity-60" data-index="6">
+                        <div class="album-sleeve"><img alt="Tenki Tími" class="w-full h-full object-cover"
+                                src="/img/music7.jpeg" />
+                        </div>
+                        <div class="vinyl-record"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT TEASER -->
+    <section class="py-24" id="about">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div
+                    class="relative aspect-square md:aspect-[4/5] overflow-hidden rounded-2xl bg-slate-100 dark:bg-zinc-900 reveal-on-scroll">
+                    <img alt="Paul Joyce portrait"
+                        class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
+                        src="R14BW.jpg" />
+                    <div class="absolute inset-0 bg-primary/10 mix-blend-overlay"></div>
+                </div>
+                <div class="reveal-on-scroll" style="transition-delay:0.15s">
+                    <span class="text-primary font-bold tracking-widest uppercase text-xs mb-4 block">About Me</span>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold mb-8">Composer, Producer &amp; Orchestrator
+                    </h2>
+                    <div class="space-y-6 text-slate-600 dark:text-slate-400 leading-relaxed text-lg">
+                        <p>Paul Joyce is a composer, producer, and orchestrator specializing in film scores,
+                            documentaries,
+                            and audiovisual projects. His music combines orchestral writing, contemporary textures, and
+                            electronic elements, exploring a sonic language that seeks emotional depth and narrative
+                            expression through sound.</p>
+                        <p>He studied at the Fundació Conservatori Superior del Liceu and previously at the Taller de
+                            Músics.
+                            His autodidactic journey began at age 13, when he discovered his passion for film music.</p>
+                    </div>
+                    <div class="mt-12 grid grid-cols-2 gap-8 mb-10">
+                        <div>
+                            <p class="text-3xl font-display font-bold text-slate-900 dark:text-white"
+                                id="count-projects">0+</p>
+                            <p class="text-sm text-slate-500 uppercase tracking-widest">Projects Scored</p>
+                        </div>
+                        <div>
+                            <p class="text-3xl font-display font-bold text-slate-900 dark:text-white" id="count-awards">
+                                0</p>
+                            <p class="text-sm text-slate-500 uppercase tracking-widest">Industry Awards</p>
+                        </div>
+                    </div>
+                    <a href="../about_paul_joyce/about.html"
+                        class="inline-flex items-center gap-2 bg-slate-900 dark:bg-white text-white dark:text-black px-8 py-3 rounded-full font-bold uppercase tracking-widest text-sm hover:bg-primary dark:hover:bg-primary dark:hover:text-white transition-all">
+                        Full Bio <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="py-32 bg-slate-900 dark:bg-zinc-950 text-white" id="contact">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="max-w-4xl mx-auto text-center mb-20 reveal-on-scroll">
+                <h2 class="font-display text-6xl md:text-8xl font-extrabold mb-8 tracking-tighter">Let's work together.
+                </h2>
+                <p class="text-xl text-slate-400">Available for freelance orchestration and production projects
+                    worldwide.</p>
+            </div>
+            <form id="contact-form" class="max-w-2xl mx-auto space-y-6 reveal-on-scroll" style="transition-delay:0.1s">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label
+                            class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Name</label>
+                        <input id="contact-name"
+                            class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-slate-500 outline-none"
+                            placeholder="John Doe" type="text" />
+                    </div>
+                    <div>
+                        <label
+                            class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Email</label>
+                        <input id="contact-email"
+                            class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-slate-500 outline-none"
+                            placeholder="john@example.com" type="email" />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Subject</label>
+                    <input id="contact-subject"
+                        class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-slate-500 outline-none"
+                        placeholder="Project Inquiry" type="text" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase tracking-widest text-slate-500 mb-2">Message</label>
+                    <textarea id="contact-message"
+                        class="w-full bg-slate-800/50 border border-slate-700 rounded-lg p-4 focus:ring-2 focus:ring-primary focus:border-primary transition-all text-white placeholder-slate-500 outline-none"
+                        placeholder="Tell me about your vision..." rows="4"></textarea>
+                </div>
+                <button
+                    class="w-full bg-primary hover:bg-green-600 text-white font-bold uppercase tracking-widest py-5 rounded-lg transition-all transform hover:scale-[1.01] active:scale-[0.99]"
+                    type="submit">
+                    Send Message
+                </button>
+                <div id="form-success" class="hidden text-center text-primary font-bold py-4">✓ Message sent! I'll get
+                    back to you soon.</div>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="py-12 bg-slate-900 dark:bg-zinc-950 border-t border-slate-800 dark:border-white/5 text-slate-500">
+        <div
+            class="container mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+            <p class="text-sm">© 2024 Paul Joyce. All rights reserved.</p>
+            <div class="flex space-x-6 text-sm">
+                <a class="hover:text-white transition-colors" href="#">Instagram</a>
+                <a class="hover:text-white transition-colors" href="#">Twitter (X)</a>
+                <a class="hover:text-white transition-colors" href="#">Spotify</a>
+                <a class="hover:text-white transition-colors" href="#">Soundcloud</a>
+            </div>
+            <p class="text-sm">Designed with <span class="text-primary">♥</span> in London</p>
+        </div>
+    </footer>
+
+    <!-- STICKY BOTTOM PLAYER -->
+    <div class="fixed bottom-0 w-full glass-nav border-t border-slate-200 dark:border-white/10 py-3 px-6 md:px-12 z-50 bg-white/90 dark:bg-zinc-900/90"
+        id="player-bar">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-4 w-1/3">
+                <div
+                    class="w-10 h-10 rounded bg-slate-200 dark:bg-zinc-800 overflow-hidden hidden sm:block flex-shrink-0">
+                    <img alt="Current Track" class="w-full h-full object-cover" id="player-thumb"
+                        src="/img/music1.png" />
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-bold truncate" id="player-track">Six Choruses (V. The Angel)</p>
+                    <p class="text-[10px] uppercase tracking-wider text-slate-500" id="player-album">Paul Joyce •
+                        Showreel</p>
+                </div>
+            </div>
+            <div class="flex flex-col items-center w-1/3">
+                <div class="flex items-center space-x-4 mb-1">
+                    <button class="material-symbols-outlined text-xl hover:text-primary transition-colors"
+                        id="player-prev">skip_previous</button>
+                    <button
+                        class="w-8 h-8 rounded-full bg-slate-900 dark:bg-white text-white dark:text-black flex items-center justify-center hover:bg-primary transition-colors"
+                        id="player-play">
+                        <span class="material-symbols-outlined text-sm" id="player-play-icon">play_arrow</span>
+                    </button>
+                    <button class="material-symbols-outlined text-xl hover:text-primary transition-colors"
+                        id="player-next">skip_next</button>
+                </div>
+                <div class="w-full max-w-md h-1.5 bg-slate-200 dark:bg-zinc-800 rounded-full relative overflow-hidden cursor-pointer progress-bar-track"
+                    id="player-progress-track">
+                    <div class="absolute left-0 top-0 h-full bg-primary rounded-full transition-all"
+                        id="player-progress" style="width:0%"></div>
+                </div>
+                <div class="flex justify-between w-full max-w-md mt-1">
+                    <span class="text-[9px] text-slate-400" id="player-current-time">0:00</span>
+                    <span class="text-[9px] text-slate-400" id="player-duration">3:42</span>
+                </div>
+            </div>
+            <div class="flex items-center justify-end space-x-4 w-1/3">
+                <button class="material-symbols-outlined text-lg hover:text-primary hidden sm:block"
+                    id="volume-btn">volume_up</button>
+                <input type="range" id="volume-slider" class="hidden sm:block w-16 accent-primary" min="0" max="100"
+                    value="80">
+                <button class="material-symbols-outlined text-lg hover:text-primary" title="Queue">queue_music</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA: Track list =====
+        const tracks = [
+            { title: "Six Choruses (V. The Angel)", meta: "Showreel • 2024", trackName: "Six Choruses (V. The Angel)", albumName: "Paul Joyce • Showreel", img: "/img/music1.png", duration: "3:42", video: "music1.mov", audio: "music1.mp3" },
+            { title: "Live...", meta: "Showreel • 2024", trackName: "Live...", albumName: "Paul Joyce • Showreel", img: "/img/music2.jpeg", duration: "4:15", video: "music2.mov", audio: "music2.mp3" },
+            { title: "The Beauty In Your Eyes", meta: "Showreel • 2024", trackName: "The Beauty In Your Eyes", albumName: "Paul Joyce • Showreel", img: "/img/music3.jpeg", duration: "5:01", video: "music3.mov", audio: "music3.mp3" },
+            { title: "Laurel", meta: "Showreel • 2024", trackName: "Laurel", albumName: "Paul Joyce • Showreel", img: "/img/music4.jpeg", duration: "3:58", video: "music4.mov", audio: "music4.mp3" },
+            { title: "Each Other", meta: "Showreel • 2024", trackName: "Each Other", albumName: "Paul Joyce • Showreel", img: "/img/music5.jpeg", duration: "6:12", video: "music5.mov", audio: "music5.mp3" },
+            { title: "A la mani", meta: "Showreel • 2024", trackName: "A la mani", albumName: "Paul Joyce • Showreel", img: "/img/music6.jpeg", duration: "7:24", video: "music6.mov", audio: "music6.mp3" },
+            { title: "Tenki Tími", meta: "Showreel • 2024", trackName: "Tenki Tími", albumName: "Paul Joyce • Showreel", img: "/img/music7.jpeg", duration: "4:30", video: "music7.mov", audio: "music7.mp3" },
+        ];
+
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        // ===== HTML5 Audio Engine =====
+        const audioPlayer = new Audio();
+        audioPlayer.volume = 0.8;
+
+        function formatTime(sec) {
+            if (isNaN(sec)) return '0:00';
+            const m = Math.floor(sec / 60);
+            const s = Math.floor(sec % 60);
+            return `${m}:${s.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgressUI() {
+            const current = audioPlayer.currentTime;
+            const total = audioPlayer.duration || 0;
+            const pct = total > 0 ? (current / total) * 100 : 0;
+            document.getElementById('player-progress').style.width = pct + '%';
+            document.getElementById('player-current-time').textContent = formatTime(current);
+            if (total > 0) {
+                document.getElementById('player-duration').textContent = formatTime(total);
+            }
+        }
+
+        audioPlayer.addEventListener('timeupdate', updateProgressUI);
+
+        audioPlayer.addEventListener('ended', () => {
+            nextTrack();
+        });
+
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            document.getElementById('player-duration').textContent = formatTime(audioPlayer.duration);
+        });
+
+        function setPlayIcons(playing) {
+            ['jukebox-play-icon', 'player-play-icon'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = playing ? 'pause' : 'play_arrow';
+            });
+        }
+
+        function selectTrack(index) {
+            currentTrack = index;
+            const track = tracks[index];
+
+            // Update jukebox center panel
+            document.getElementById('jukebox-title').textContent = track.title;
+            document.getElementById('jukebox-meta').textContent = track.meta;
+
+            // Update player bar
+            document.getElementById('player-track').textContent = track.trackName;
+            document.getElementById('player-album').textContent = track.albumName;
+            document.getElementById('player-thumb').src = track.img;
+            document.getElementById('player-duration').textContent = track.duration;
+
+            // Reset progress UI
+            document.getElementById('player-progress').style.width = '0%';
+            document.getElementById('player-current-time').textContent = '0:00';
+
+            // Load and play audio
+            audioPlayer.src = track.audio;
+            audioPlayer.load();
+            if (isPlaying) {
+                audioPlayer.play().catch(() => { });
+            }
+
+            // Switch background video
+            const bgVideo = document.getElementById('jukebox-bg-video');
+            if (bgVideo && track.video) {
+                bgVideo.style.opacity = '0';
+                setTimeout(() => {
+                    bgVideo.src = track.video;
+                    bgVideo.load();
+                    bgVideo.play().catch(() => { });
+                    bgVideo.style.transition = 'opacity 0.8s ease';
+                    bgVideo.style.opacity = '0.30';
+                }, 400);
+            }
+
+            // Jukebox items visual state & dynamic positioning
+            const isMobile = window.innerWidth < 768;
+            const ring = document.getElementById('jukebox-ring');
+
+            // PC view remains static (reverted from 3D rotation)
+            ring.style.transform = 'none';
+
+            document.querySelectorAll('.jukebox-item').forEach((item, i) => {
+                const diff = i - index;
+
+                if (i === index) {
+                    item.classList.add('active-item');
+                    item.classList.remove('opacity-60');
+                } else {
+                    item.classList.remove('active-item');
+                    item.classList.add('opacity-60');
+                }
+
+                if (isMobile) {
+                    // Mobile: Rhythm Game style horizontal carousel
+                    const x = diff * 110; // Slightly tighter spacing
+                    const z = Math.abs(diff) * -120; // More depth to separate items
+                    const s = i === index ? 1.2 : 0.7; // More dramatic scale diff
+                    const r = diff * 15; // More tilt
+                    item.style.transform = `translateX(${x}px) translateZ(${z}px) scale(${s}) rotateY(${r}deg)`;
+                    item.style.zIndex = 100 - Math.abs(diff);
+                    item.style.opacity = Math.abs(diff) > 2 ? '0' : (i === index ? '1' : '0.4');
+                    // Prevent misclicks by disabling pointer events on far items
+                    item.style.pointerEvents = Math.abs(diff) > 1 ? 'none' : 'auto';
+                } else {
+                    // Desktop: Original 2D Ring
+                    item.style.transform = '';
+                    item.style.zIndex = i === index ? 100 : 1;
+                    item.style.opacity = '1';
+                    item.style.pointerEvents = 'auto';
+                }
+            });
+        }
+
+        function togglePlay() {
+            if (audioPlayer.src === '' || audioPlayer.src === window.location.href) {
+                // No track loaded yet — load first track
+                audioPlayer.src = tracks[currentTrack].audio;
+                audioPlayer.load();
+            }
+            if (audioPlayer.paused) {
+                audioPlayer.play().catch(() => { });
+                isPlaying = true;
+            } else {
+                audioPlayer.pause();
+                isPlaying = false;
+            }
+            setPlayIcons(isPlaying);
+        }
+
+        function nextTrack() {
+            selectTrack((currentTrack + 1) % tracks.length);
+        }
+        function prevTrack() {
+            selectTrack((currentTrack - 1 + tracks.length) % tracks.length);
+        }
+
+        // Jukebox album click — select and auto-play
+        document.querySelectorAll('.jukebox-item').forEach((item, i) => {
+            item.addEventListener('click', () => {
+                isPlaying = true;
+                setPlayIcons(true);
+                selectTrack(i);
+            });
+        });
+
+        // Play buttons
+        document.getElementById('jukebox-play').addEventListener('click', togglePlay);
+        document.getElementById('player-play').addEventListener('click', togglePlay);
+
+        // Swipe Support for Mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        const jukeboxSec = document.getElementById('work');
+
+        jukeboxSec.addEventListener('touchstart', e => {
+            if (window.innerWidth < 768) {
+                touchStartX = e.changedTouches[0].screenX;
+            }
+        }, { passive: true });
+
+        jukeboxSec.addEventListener('touchend', e => {
+            if (window.innerWidth < 768) {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }
+        }, { passive: true });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchEndX - touchStartX;
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff < 0) {
+                    nextTrack(); // Swipe left -> Next
+                } else {
+                    prevTrack(); // Swipe right -> Prev
+                }
+                isPlaying = true;
+                setPlayIcons(true);
+            }
+        }
+        document.getElementById('jukebox-next').addEventListener('click', () => { isPlaying = true; setPlayIcons(true); nextTrack(); });
+        document.getElementById('jukebox-prev').addEventListener('click', () => { isPlaying = true; setPlayIcons(true); prevTrack(); });
+        document.getElementById('player-next').addEventListener('click', () => { isPlaying = true; setPlayIcons(true); nextTrack(); });
+        document.getElementById('player-prev').addEventListener('click', () => { isPlaying = true; setPlayIcons(true); prevTrack(); });
+
+        // Progress bar click to seek
+        document.getElementById('player-progress-track').addEventListener('click', (e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            const ratio = (e.clientX - rect.left) / rect.width;
+            if (audioPlayer.duration) {
+                audioPlayer.currentTime = ratio * audioPlayer.duration;
+            }
+        });
+
+        // Volume slider
+        document.getElementById('volume-btn').addEventListener('click', () => {
+            const slider = document.getElementById('volume-slider');
+            slider.classList.toggle('hidden');
+        });
+        document.getElementById('volume-slider').addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value / 100;
+        });
+
+        // ===== Dark Mode =====
+        const darkToggle = document.getElementById('dark-toggle');
+        darkToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', document.documentElement.classList.contains('dark') ? '1' : '0');
+        });
+        if (localStorage.getItem('darkMode') === '1') document.documentElement.classList.add('dark');
+
+        // ===== Mobile Menu =====
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        // ===== Scroll: Nav bg =====
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-white/95', 'dark:bg-zinc-900/95', 'shadow-sm');
+            } else {
+                nav.classList.remove('bg-white/95', 'dark:bg-zinc-900/95', 'shadow-sm');
+            }
+        });
+
+        // ===== Scroll Reveal =====
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => revealObserver.observe(el));
+
+        // Immediately reveal hero elements
+        document.querySelectorAll('.reveal-on-scroll').forEach(el => {
+            if (el.getBoundingClientRect().top < window.innerHeight) {
+                el.classList.add('revealed');
+            }
+        });
+
+        // ===== Counter animation =====
+        function animateCounter(el, target, suffix = '') {
+            let start = 0;
+            const step = Math.ceil(target / 60);
+            const timer = setInterval(() => {
+                start += step;
+                if (start >= target) { start = target; clearInterval(timer); }
+                el.textContent = start + suffix;
+            }, 25);
+        }
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(document.getElementById('count-projects'), 150, '+');
+                    animateCounter(document.getElementById('count-awards'), 12);
+                    counterObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) counterObserver.observe(aboutSection);
+
+        // ===== Contact Form =====
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('contact-name').value.trim();
+            const email = document.getElementById('contact-email').value.trim();
+            if (!name || !email) {
+                alert('Please fill in your name and email.');
+                return;
+            }
+            document.getElementById('contact-form').querySelectorAll('input, textarea, button[type=submit]').forEach(el => el.disabled = true);
+            document.getElementById('form-success').classList.remove('hidden');
+        });
+
+        // Initialize player display
+        selectTrack(0);
+
+        // Responsive position update
+        window.addEventListener('resize', () => {
+            selectTrack(currentTrack);
+        });
+    </script>
+</body>
+
+</html>
